@@ -1,0 +1,15 @@
+{
+  "name": "routewatch",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "validate": "node scripts/validate-artifact.mjs",
+    "start": "node scripts/dev.mjs",
+    "dev": "node scripts/dev.mjs",
+    "check": "node scripts/check.mjs && node scripts/check-stream.mjs && node scripts/check-airports.mjs && node scripts/check-enterprise.mjs && node scripts/check-security.mjs && node scripts/check-operations.mjs && node scripts/check-simulator.mjs"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  }
+}

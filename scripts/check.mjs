@@ -1,0 +1,6 @@
+import assert from 'node:assert/strict';
+import {assess} from '../worker/index.js';
+const today=new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+for(const route of [{origin:'JFK',destination:'SFO',date:today},{origin:'LGA',destination:'BOS',date:today}]){const r=await assess(route);assert.equal(r.sources.length,5);assert.equal(new Set(r.sources.map(s=>s.name)).size,3);assert(r.evidence.every(e=>e.url.startsWith('https://')));console.log(route.origin+' → '+route.destination+': '+r.verdict+'; '+(5-r.missing)+'/5 checks');assert(r.evidence.filter(e=>e.source==='FAA').every(e=>e.airport==='Route'||['LGA','BOS','JFK','SFO'].includes(e.airport)));}
+for(const input of [{origin:'JFK',destination:'JFK',date:'2026-10-13'},{origin:'ZZZ',destination:'SFO',date:'2026-10-13'},{origin:'JFK',destination:'SFO',date:'2026-02-30'}])await assert.rejects(()=>assess(input));
+const realFetch=globalThis.fetch;globalThis.fetch=async()=>{throw Error('Injected transport outage')};try{const r=await assess({origin:'JFK',destination:'SFO',date:today});assert.equal(r.missing,5);assert.equal(r.verdict,'Assessment incomplete');assert.equal(r.evidence.length,0);console.log('All-source outage: incomplete assessment, no invented evidence');}finally{globalThis.fetch=realFetch}

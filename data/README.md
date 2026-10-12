@@ -1,0 +1,3 @@
+Airport directory snapshot retrieved October 12, 2026. Sources: https://github.com/mborsetti/airportsdata (MIT) and https://github.com/davidmegginson/ourairports-data (public-domain airport metadata). Includes US operational IATA-coded airports, excluding known closed, heliport, seaplane and balloon records. Not an exhaustive catalog of US airstrips; not a live airline schedule.
+
+Each entry: [city, latitude, longitude, IANA timezone, airport name, state, scheduled_service flag, FAA local identifier, OurAirports type]. The same directory is embedded into worker/index.js so the server deployment remains a single module. Updating the JSON alone does not change the embedded module.

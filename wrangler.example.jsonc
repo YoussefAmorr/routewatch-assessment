@@ -1,0 +1,19 @@
+{
+  "name": "routewatch-mission-control",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-10-12",
+  "d1_databases": [{"binding":"DB", "database_name":"routewatch-operations", "database_id":"REPLACE_WITH_CREATED_D1_ID", "migrations_dir":"migrations"}],
+  "queues": {
+    "producers": [{"binding":"ASSESSMENT_QUEUE","queue":"routewatch-assessments"}],
+    "consumers": [{"queue":"routewatch-assessments","max_batch_size":1,"max_batch_timeout":5,"max_concurrency":2,"max_retries":3,"dead_letter_queue":"routewatch-dead-letter"}]
+  },
+  "triggers": {"crons":["*/5 * * * *"]},
+  "observability":{"enabled":true},
+  "vars": {
+    "ACCESS_TEAM_DOMAIN":"REPLACE.cloudflareaccess.com",
+    "ACCESS_AUD":"REPLACE_WITH_ACCESS_APPLICATION_AUD",
+    "TEAM_MEMBERS":"{\"operator@example.com\":{\"org\":\"example\",\"role\":\"admin\"},\"viewer@example.com\":{\"org\":\"example\",\"role\":\"viewer\"}}",
+    "PUBLIC_BASE_URL":"https://REPLACE_WITH_YOUR_APP_HOST",
+    "ALERT_FROM":"RouteWatch <alerts@REPLACE_WITH_VERIFIED_DOMAIN>"
+  }
+}
